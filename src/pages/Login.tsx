@@ -3,8 +3,10 @@ import type { LoginForm } from "../types/LoginForm";
 import AuthService from "../services/AuthService";
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 const Login = () => {
+    const navigate = useNavigate();
     const [error, setError] = useState("");
     const {
         register,
@@ -17,6 +19,7 @@ const Login = () => {
         try{
             const responseData = await AuthService.login(data);
             localStorage.setItem("token",responseData.token);
+            navigate("/pessoas/listar",{replace:true});
         }catch(error){
             if(axios.isAxiosError(error)){
                 console.log(error.response?.data?.error);
@@ -28,6 +31,7 @@ const Login = () => {
 
     return(
         <div>
+            <h1>Login</h1>
             <p>{error}</p>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <table>
@@ -39,7 +43,7 @@ const Login = () => {
                         <tr><td>{errors.email && errors.email?.message}</td></tr>
                         <tr>
                             <td><label htmlFor="password">Senha</label></td>
-                            <td><input type="password" id="password" {...register("password",{required:"Informe uma senha"})}/></td>
+                            <td><input placeholder="Senha" type="password" id="password" {...register("password",{required:"Informe uma senha"})}/></td>
                         </tr>
                         <tr><td>{errors.password && errors.password?.message}</td></tr>
                     </tbody>

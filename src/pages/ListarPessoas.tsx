@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import PessoaService from "../services/PessoaService";
 import type { Pessoa } from "../types/Pessoa";
+import MenuPessoas from "../components/MenuPessoas";
 
 const ListarPessoas = () => {
     const [pessoas, setPessoas] = useState<Pessoa[]>([]);
@@ -16,6 +17,8 @@ const ListarPessoas = () => {
     return(
         <div>
             <h1>Lista de Pessoas</h1>
+            <MenuPessoas />
+            <br />
             <table border={1}>
                 <thead>
                     <tr>
